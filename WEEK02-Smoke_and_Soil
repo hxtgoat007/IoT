@@ -7,8 +7,7 @@ int soilValue = 0;
 Void setup()
 {
     Serial.begin(9600);
-    Serial.println("Smoke and Soil Moisture
-    Sensor Monitoring");
+    Serial.println("Smoke and Soil Moisture Sensor Monitoring");
 }
 
 Void loop()
