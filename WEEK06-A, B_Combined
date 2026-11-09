@@ -1,0 +1,104 @@
+
+#include <DHT.h>
+#include <ESP8266WiFi.h>
+
+String apiKey = "YOUR_THINGSPEAK_API_KEY";
+const char* ssid = "YOUR_WIFI_NAME";
+const char* pass = "YOUR_WIFI_PASSWORD";
+const char* server = "api.thingspeak.com";
+
+#define DHTPIN D2
+#define DHTTYPE DHT11
+#define IRpin D4
+
+DHT dht(DHTPIN, DHTTYPE);
+WiFiClient client;
+
+int value;
+
+void setup() {
+    Serial.begin(115200);
+    delay(1000);
+
+    dht.begin();
+    pinMode(IRpin, INPUT);
+
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+
+    WiFi.begin(ssid, pass);
+
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    Serial.println();
+    Serial.println("WiFi Connected");
+}
+
+void loop() {
+
+    // Read DHT11 Sensor
+    float h = dht.readHumidity();
+    float t = dht.readTemperature();
+
+    if (isnan(h) || isnan(t)) {
+        Serial.println("Failed to read from DHT sensor!");
+    } else {
+        Serial.print("Temperature: ");
+        Serial.print(t);
+        Serial.print(" Humidity: ");
+        Serial.println(h);
+    }
+
+    // Read IR Sensor
+    value = digitalRead(IRpin);
+
+    Serial.println(value);
+
+    if (value == 0) {
+        Serial.println("Object detected");
+    } else {
+        Serial.println("No object detected");
+    }
+
+    // Upload Both Sensor Values to ThingSpeak
+    if (client.connect(server, 80)) {
+
+        String postStr = "";
+
+        if (!isnan(t) && !isnan(h)) {
+            postStr = "field1=";
+            postStr += String(t);
+            postStr += "&field2=";
+            postStr += String(h);
+            postStr += "&field3=";
+            postStr += String(value);
+        } else {
+            postStr = "field3=";
+            postStr += String(value);
+        }
+
+        client.print("POST /update HTTP/1.1\r\n");
+        client.print("Host: api.thingspeak.com\r\n");
+        client.print("Connection: close\r\n");
+        client.print("X-THINGSPEAKAPIKEY: ");
+        client.print(apiKey + "\r\n");
+        client.print("Content-Type: application/x-www-form-urlencoded\r\n");
+        client.print("Content-Length: ");
+        client.print(postStr.length());
+        client.print("\r\n\r\n");
+        client.print(postStr);
+
+        Serial.println("Data uploaded to ThingSpeak");
+
+        client.stop();
+
+    } else {
+        Serial.println("Connection failed");
+    }
+
+    Serial.println("Waiting...");
+    delay(20000);
+}
