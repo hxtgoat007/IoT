@@ -1,80 +1,54 @@
+
 #include <ESP8266WiFi.h>
 
 String apiKey = "YOUR_THINGSPEAK_API_KEY";
-
 const char* ssid = "YOUR_WIFI_NAME";
 const char* pass = "YOUR_WIFI_PASSWORD";
 const char* server = "api.thingspeak.com";
-
 #define IRpin D4
-
 WiFiClient client;
-
 int value;
 
-void setup()
-{
+void setup() {
     Serial.begin(115200);
-
     pinMode(IRpin, INPUT);
-
     delay(1000);
-
     Serial.print("Connecting to ");
     Serial.println(ssid);
-
     WiFi.begin(ssid, pass);
-
-    while (WiFi.status() != WL_CONNECTED)
-    {
+    while (WiFi.status() != WL_CONNECTED) {
         delay(2000);
         Serial.print(".");
     }
-
     Serial.println();
     Serial.println("WiFi connected");
 }
 
-void loop()
-{
+void loop() {
     value = digitalRead(IRpin);
-
     Serial.println(value);
-
-    if (value == 0)
-    {
+    if (value == 0) {
         Serial.println("Object detected");
-    }
-    else
-    {
+    } else {
         Serial.println("No object detected");
     }
-
-    if (client.connect(server, 80))
-    {
+    if (client.connect(server, 80)) {
         String postStr = "field1=";
         postStr += String(value);
-        postStr += "\r\n\r\n";
-
-        client.print("POST /update HTTP/1.1\n");
-        client.print("Host: api.thingspeak.com\n");
-        client.print("Connection: close\n");
-        client.print("X-THINGSPEAKAPIKEY: " + apiKey + "\n");
-        client.print("Content-Type: application/x-www-form-urlencoded\n");
+        client.print("POST /update HTTP/1.1\r\n");
+        client.print("Host: api.thingspeak.com\r\n");
+        client.print("Connection: close\r\n");
+        client.print("X-THINGSPEAKAPIKEY: ");
+        client.print(apiKey + "\r\n");
+        client.print("Content-Type: application/x-www-form-urlencoded\r\n");
         client.print("Content-Length: ");
         client.print(postStr.length());
-        client.print("\n\n");
-
+        client.print("\r\n\r\n");
         client.print(postStr);
-
-        client.stop();
-
         Serial.println("Data uploaded to ThingSpeak");
-    }
-    else
-    {
+        client.stop();
+    } else {
         Serial.println("Connection failed");
     }
-
-    delay(15000);
+    delay(20000);
 }
