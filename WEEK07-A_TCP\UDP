@@ -1,3 +1,4 @@
+
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include <DHT.h>
@@ -29,12 +30,15 @@ void setup()
 
     Serial.println();
     Serial.println("Connected to wifi. IP: ");
+    Serial.println(WiFi.localIP());
+
     dht.begin();
 }
 
 void loop()
 {
     delay(1000);
+
     float temperature = dht.readTemperature();
     float humidity = dht.readHumidity();
 
