@@ -1,4 +1,3 @@
-
 const int smokePin = A0;
 const int soilPin = A1;
 
