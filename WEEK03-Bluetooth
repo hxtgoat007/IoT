@@ -10,7 +10,7 @@ void setup() {
     Serial.begin(9600);
     Bluetooth.begin(9600);
     Serial.println("IR Sensor Bluetooth Monitoring Started");
-    Serial.println("HC-05 Bluetooth Initialized");
+    Serial.println("HC-05 Connected");
 }
 
 void loop() {
