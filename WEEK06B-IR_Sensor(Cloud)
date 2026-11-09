@@ -1,4 +1,3 @@
-
 #include <ESP8266WiFi.h>
 
 String apiKey = "YOUR_THINGSPEAK_API_KEY";
