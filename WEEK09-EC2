@@ -42,11 +42,19 @@ Step 8: Associate Public IP Address
     4. Click Connect.
 Step 10: Install Web Server (Apache)
 
-Run the following commands in the terminal:
+Run the following commands in the terminal(powershell):
+/*
+IF failed connection EXECUTE BELOW COMMAND OTHER WISE SUCCESSFULLY CONNECTED COMMAND:
+ssh -i "webkey.pem" ec2-user@PUBLIC_IP_ADDRESS
+*/
+If Succesfully connected:
 sudo yum update -y
 sudo yum install httpd -y
 sudo systemctl start httpd
 sudo systemctl enable httpd
+
+
+Run the following commands in the terminal(powershell):
 
 
 Step 11: Create a Sample Web Page
