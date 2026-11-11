@@ -38,28 +38,28 @@ void loop()
 {
     delay(1000);
 
-    float temperature = dht.readTemperature();
-    float humidity = dht.readHumidity();
+    float t = dht.readTemperature();
+    float h = dht.readHumidity();
 
-    if (isnan(temperature) || isnan(humidity))
+    if (isnan(t) || isnan(h))
     {
         Serial.println("Failed to read from DHT sensor!");
         return;
     }
 
     Serial.print("Temperature: ");
-    Serial.print(temperature);
+    Serial.print(t);
     Serial.print(" °C Humidity: ");
-    Serial.print(humidity);
+    Serial.print(h);
     Serial.println(" %");
 
     Serial.println("Sending data over UDP:");
 
     udp.beginPacket(udpAddress, udpPort);
     udp.print("Temperature: ");
-    udp.print(temperature);
+    udp.print(t);
     udp.print(" °C Humidity: ");
-    udp.print(humidity);
+    udp.print(h);
     udp.print(" %");
 
     udp.endPacket();
