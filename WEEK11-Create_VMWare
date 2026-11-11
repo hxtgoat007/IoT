@@ -89,17 +89,3 @@ The network is working.
 
 Stop the ping using:
 Ctrl + C
-
-
-Step 12: Install VMware Tools
-
-In Ubuntu Terminal, execute:
-sudo apt update
-
-
-Then:
-sudo apt install open-vm-tools open-vm-tools-desktop -y
-
-
-Restart:
-sudo reboot
