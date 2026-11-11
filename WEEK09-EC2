@@ -80,7 +80,7 @@ Save and exit.
 
 Step 12: Access the Web Server
     1. Open a browser.
-    2. Enter: http://<Public-IP-Address>
+    2. Enter: http://PUBLIC_IP_ADDRESS
 
 Example:
 http://13.235.xxx.xxx
