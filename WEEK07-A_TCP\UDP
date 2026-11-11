@@ -2,8 +2,8 @@
 #include <WiFiUdp.h>
 #include <DHT.h>
 
-const char* ssid = "349";
-const char* password = "12341234";
+const char* ssid = "YOUR_Wi-Fi_NAME";
+const char* password = "YOUR_Wi-Fi_PASSWORD";
 const char* udpAddress = "YOUR_UDP_ADDRESS";
 const int udpPort = 8081;
 
