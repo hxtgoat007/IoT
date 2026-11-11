@@ -37,19 +37,29 @@ Step 7: Verify the Virtual Machine
 Check the current directory:
 pwd
 
-
 Check the operating system:
 lsb_release -a
-
 
 Check the IP address:
 ip addr
 
-
 Test the internet connection:
 ping google.com
 
-
 Stop the ping using Ctrl + C.
+
 Step 8: Verify Installation
 After restarting, verify that Ubuntu is running correctly and the network connection is working.
+
+
+
+Step 9: Install VMware Tools
+
+In Ubuntu Terminal, execute:
+sudo apt update
+
+Then:
+sudo apt install open-vm-tools open-vm-tools-desktop -y
+
+Restart:
+sudo reboot
