@@ -1,5 +1,6 @@
 #include <SoftwareSerial.h>
 SoftwareSerial Bluetooth(10, 9);
+
 const int irPin = 2;
 const int ledPin = 13;
 int irValue;
